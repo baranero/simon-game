@@ -68,8 +68,6 @@ function startGame(event) {
         event.key ? isGameStarted = true : ""
         event.key ? document.querySelector("h2").textContent = `Level ${patternToRepeat.length}` : ""
         firstStep()
-    } else {
-        addSound(event.key)
     }  
 }
 
@@ -81,6 +79,7 @@ function generateNumber() {
 function displayGeneratedNumber() {
     setTimeout(function() {
         document.querySelectorAll("button")[randomBlock].classList.add("choosen")
+        addSound(document.querySelectorAll("button")[randomBlock].classList[0])
         setTimeout(function() {
             document.querySelectorAll("button")[randomBlock].classList.remove("choosen")}, 150)
     }, 500)
