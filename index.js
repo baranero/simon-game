@@ -1,13 +1,16 @@
-let numberOfButtons = document.querySelectorAll("button").length
+const buttonItem = document.querySelectorAll("button")
+const titleItem = document.querySelector("h2")
+const bodyItem = document.querySelector("body")
+const numberOfButtons = buttonItem.length
 let isGameStarted = false
 let patternToRepeat = []
 let patternToRepeatClicked = []
 let numberOfClick = 0
 
 for (let i = 0; i < numberOfButtons; i++) {
-    document.querySelectorAll("button")[i].addEventListener("click", function() {
+    buttonItem[i].addEventListener("click", function() {
         isGameStarted ? addSound(this.classList[0]) : null
-        patternToRepeatClicked.push(document.querySelectorAll("button")[i].classList[0])
+        patternToRepeatClicked.push(buttonItem[i].classList[0])
         numberOfClick += 1
         if (checkIfMatchIsCorrect() == true) {
             firstStep()
@@ -16,20 +19,20 @@ for (let i = 0; i < numberOfButtons; i++) {
         } else {
             if (patternToRepeat[numberOfClick - 1] != patternToRepeatClicked[numberOfClick - 1]) {
                 addSound()
-                document.querySelector("body").classList.add("game-over")
+                bodyItem.classList.add("game-over")
                 setTimeout(function() {
-                    document.querySelector("body").classList.remove("game-over")}, 250)
+                    bodyItem.classList.remove("game-over")}, 250)
                 patternToRepeatClicked = []
                 patternToRepeat = []
                 numberOfClick = 0
                 isGameStarted = false
-                document.querySelector("h2").textContent = `Game over! Press any key to restart`
+                titleItem.textContent = `Game over! Press any key to restart`
             }
         }
 
-        document.querySelectorAll("button")[i].classList.add("choosen")
+        buttonItem[i].classList.add("choosen")
         setTimeout(function() {
-            document.querySelectorAll("button")[i].classList.remove("choosen")}, 150)
+            buttonItem[i].classList.remove("choosen")}, 150)
         })
         
     }
@@ -66,7 +69,7 @@ function addSound(key) {
 function startGame(event) {
     if (isGameStarted == false) {
         event.key ? isGameStarted = true : ""
-        event.key ? document.querySelector("h2").textContent = `Level ${patternToRepeat.length}` : ""
+        event.key ? titleItem.textContent = `Level ${patternToRepeat.length}` : ""
         firstStep()
     }  
 }
@@ -78,19 +81,19 @@ function generateNumber() {
 
 function displayGeneratedNumber() {
     setTimeout(function() {
-        document.querySelectorAll("button")[randomBlock].classList.add("choosen")
-        addSound(document.querySelectorAll("button")[randomBlock].classList[0])
+        buttonItem[randomBlock].classList.add("choosen")
+        addSound(buttonItem[randomBlock].classList[0])
         setTimeout(function() {
-            document.querySelectorAll("button")[randomBlock].classList.remove("choosen")}, 150)
+            buttonItem[randomBlock].classList.remove("choosen")}, 150)
     }, 500)
 }
 
 function addGeneratedBlocksToArray() {
-    patternToRepeat.push(document.querySelectorAll("button")[generateNumber()].classList[0])
+    patternToRepeat.push(buttonItem[generateNumber()].classList[0])
 }
 
 function setLevel() {
-    document.querySelector("h2").textContent = `Level ${patternToRepeat.length}`
+    titleItem.textContent = `Level ${patternToRepeat.length}`
 }
 
 function firstStep() {
